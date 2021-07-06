@@ -1,0 +1,15 @@
+cd payment
+mvn clean package -Dmaven.test.skip=true
+docker build . -t includeno/payment_killsystem:1.0.0
+
+
+docker run -itd -p 8081:8080 -e --name payment_killsystem_container includeno/payment_killsystem:1.0.0
+docker logs -ft payment_killsystem_container
+
+
+docker stop payment_killsystem_container
+docker rm payment_killsystem_container
+docker image rm includeno/payment_killsystem:1.0.0
+
+
+docker exec -it payment_killsystem_container /bin/bash

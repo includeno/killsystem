@@ -1,0 +1,15 @@
+
+mvn clean package -Dmaven.test.skip=true
+docker build . -t includeno/kill_killsystem:1.0.0
+
+
+docker run -itd -p 8082:8080 -e --name kill_killsystem_container includeno/kill_killsystem:1.0.0
+docker logs -ft kill_killsystem_container
+
+
+docker stop kill_killsystem_container
+docker rm kill_killsystem_container
+docker image rm includeno/kill_killsystem:1.0.0
+
+
+docker exec -it kill_killsystem_container /bin/bash

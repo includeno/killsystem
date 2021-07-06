@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudcommons.mapperer.ItemKillSuccessMapper">
+    <select id="getIksList" parameterType="com.cloudcommons.vo.ItemKillSuccessQuery" resultType="com.cloudcommons.vo.ItemKillSuccessVO">
+        SELECT iks.id as id,iks.kill_id as killId, u.user_name as userName ,iks.item_id as itemId,i.name AS itemName FROM item_kill_success iks
+        LEFT JOIN item i ON i.id=iks.item_id AND i.is_active=1
+        LEFT JOIN item_kill ik ON ik.id=iks.kill_id AND ik.is_active=1
+        LEFT JOIN USER u ON u.id=iks.user_id
+        <where>
+            <if test="userName != null">
+                And u.user_name like #{userName}"%"
+            </if>
+            <if test="itemName != null">
+                AND i.name like #{itemName}"%"
+            </if>
+        </where>
+        LIMIT #{page},#{limit}
+
+    </select>
+</mapper>
