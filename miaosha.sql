@@ -54,6 +54,7 @@ CREATE TABLE `user`
     `email`       varchar(45) DEFAULT NULL COMMENT '邮箱',
     `is_hidden`   int(11) DEFAULT NULL COMMENT '是否隐藏(1=是；0=否)',
     `is_active`   int(11) DEFAULT NULL COMMENT '是否有效(1=是；0=否)',
+    `money` int(11) DEFAULT '0' COMMENT '金额',
     `create_time` datetime    DEFAULT NULL COMMENT '创建时间',
     `update_time` datetime    DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`)
