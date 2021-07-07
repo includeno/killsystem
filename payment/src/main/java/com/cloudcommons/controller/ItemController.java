@@ -3,7 +3,9 @@ package com.cloudcommons.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloudcommons.entity.Item;
 import com.cloudcommons.exception.R;
+import com.cloudcommons.flow.ItemFlow;
 import com.cloudcommons.service.ItemService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,42 +15,40 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
 
     @Autowired
-    ItemService itemService;
+    ItemFlow itemFlow;
 
-    //获取所有商品列表
-    @GetMapping("getItems")
-    public R getItems(){
-        return R.ok().data("items",itemService.list(null));
+    //添加商品
+    @PostMapping("/item")
+    @ApiOperation(value = "添加商品", notes = "添加商品")
+    public R addItem(Item item){
+        boolean save = itemFlow.add(item);
+        return save?R.ok():R.error();
     }
 
-
+    //商品
+    @PutMapping("/item")
+    public R updateItem(Item item){
+        boolean save = itemFlow.update(item);
+        return save?R.ok():R.error();
+    }
 
     //获取单个商品
-    @GetMapping("/getItem/{id}")
+    @GetMapping("/item/{id}")
     public R getItem(@PathVariable("id") int id){
-        Item item = itemService.getById(id);
+        Item item = itemFlow.queryById(id);
         return R.ok().data("item",item);
     }
 
-    //添加商品
-    @PostMapping("/addItem")
-    public R addItem(Item item){
-        if (item!=null && !item.getName().isEmpty() && item.getStock()>=0 && !item.getCode().isEmpty()){
-            Item item1 = itemService.getOne(new QueryWrapper<Item>().eq("name", item.getName()));
-            if (item1!=null){
-                return R.error("已存在该商品");
-            }
-            boolean save = itemService.save(item);
-            return save?R.ok():R.error();
-        }
-        return R.error();
+    //获取所有商品列表
+    @GetMapping("/items")
+    public R list(){
+        return R.ok().data("items",itemFlow.list());
     }
 
     //删除商品
-    @DeleteMapping("/removeItem/{id}")
+    @PostMapping("/item/{id}")
     public R removeItem(@PathVariable("id") int id){
-        //查询是否存在
-        boolean res = itemService.removeById(id);
+        boolean res = itemFlow.deleteById(id);
         return res?R.ok().message("删除成功!"):R.error().message("删除失败");
     }
 }

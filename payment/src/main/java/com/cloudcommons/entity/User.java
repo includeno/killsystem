@@ -42,7 +42,7 @@ public class User implements Serializable {
      * 用户名
      */
     @ApiModelProperty("用户名")
-    private String userName;
+    private String username;
 
     /**
      * 密码
@@ -74,22 +74,27 @@ public class User implements Serializable {
     @ApiModelProperty("是否有效(1=是；0=否)")
     @TableLogic
     private Integer isActive;
-
+    public static final Integer active=1;
+    public static final Integer inactive=0;
 
     /**
      * 金额
      */
     @ApiModelProperty("金额")
     private Integer money;
-
+    public static final Integer defaultmoney=100;
+    public static final Integer muchmoney=200;
+    public static final Integer lessmoney=50;
 
     //只添加不更新
+    @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")//写出数据库时格式化
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")//页面写出数据库时格式化
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     //添加和更新
+    @ApiModelProperty("更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")//写出数据库时格式化
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")//页面写出数据库时格式化
     @TableField(fill = FieldFill.INSERT_UPDATE)

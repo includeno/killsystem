@@ -11,6 +11,7 @@ import com.cloudcommons.service.ItemKillService;
 import com.cloudcommons.service.ItemService;
 import com.cloudcommons.vo.ItemKillVO;
 import com.cloudcommons.vo.ItemQuery;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class ItemKillController {
 
     //查商品列表
     @PostMapping("/getKillList/{page}/{limit}")
+    @ApiOperation(value = "分页查询秒杀商品", notes = "分页查询秒杀商品")
     public R getKillList(@PathVariable("page") int page, @PathVariable("limit") int limit, @RequestBody ItemQuery itemQuery){
         Page<ItemKill> queryPage=new Page<>(page,limit);//分页器
         //先查询商品
@@ -93,7 +95,7 @@ public class ItemKillController {
         return R.ok().data("itemKill",itemKillVo);
     }
 
-    //添加活动，同一个商品可以添加多次
+    //添加秒杀活动商品，同一个商品可以添加多次
     @PostMapping("/addItemKill")
     public R addItemKill(ItemKill itemKill){
         if (itemKill!=null && itemKill.getItemId()!=null && itemKill.getTotal()>=0){
@@ -104,7 +106,7 @@ public class ItemKillController {
         return R.error();
     }
 
-    //修改活动，只能单个
+    //修改秒杀活动商品，只能对单个商品信息进行修改
     @PostMapping("/updateItemKill")
     public R updateItemKill(ItemKill itemKill){
         if (itemKill!=null && itemKill.getItemId()!=null && itemKill.getTotal()>=0){

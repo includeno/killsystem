@@ -48,7 +48,7 @@ CREATE TABLE `randomcode`
 CREATE TABLE `user`
 (
     `id`          int(11) NOT NULL AUTO_INCREMENT,
-    `user_name`   varchar(45) DEFAULT NULL COMMENT '用户名',
+    `username`   varchar(45) DEFAULT NULL COMMENT '用户名',
     `password`    varchar(45) DEFAULT NULL COMMENT '密码',
     `phone`       varchar(45) DEFAULT NULL COMMENT '手机号',
     `email`       varchar(45) DEFAULT NULL COMMENT '邮箱',

@@ -8,6 +8,8 @@ import com.cloudcommons.entity.ItemKillSuccess;
 import com.cloudcommons.exception.R;
 import com.cloudcommons.service.ItemKillSuccessService;
 import com.cloudcommons.vo.ItemKillSuccessQuery;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@Api(value = "秒杀成功订单接口", tags = "秒杀成功订单相关的接口", description = "秒杀成功订单测试接口")
 public class ItemKillSuccessController {
 
     @Autowired
     private ItemKillSuccessService iksService;
 
     @PostMapping("/getItemKillSuccessList")
+    @ApiOperation(value = "分页查询秒杀成功订单", notes = "分页查询秒杀成功订单")
     public R getIksList(@RequestBody ItemKillSuccessQuery iksQuery){
         int pageNo=(iksQuery.getPage()-1)*iksQuery.getLimit();
 

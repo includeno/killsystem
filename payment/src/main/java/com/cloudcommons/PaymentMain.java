@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 //@EnableDiscoveryClient//zookeeper
-public class CommonsMain {
+public class PaymentMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(CommonsMain.class, args);
+        SpringApplication.run(PaymentMain.class, args);
     }
 
 }
