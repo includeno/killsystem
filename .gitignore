@@ -2,9 +2,13 @@
 target
 *idea
 *iml
+
+# vscode
 *.project
 */.project
 *.classpath
 */.classpath
 */.settings/*
 *.settings/*
+*/.*/.*
+*/.*
