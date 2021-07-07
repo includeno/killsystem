@@ -3,6 +3,8 @@ target
 *idea
 *iml
 *.project
+*/.project
 *.classpath
+*/.classpath
 */.settings/*
 *.settings/*
