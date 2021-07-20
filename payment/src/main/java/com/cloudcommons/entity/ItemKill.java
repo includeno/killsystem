@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -28,7 +29,7 @@ import java.util.Date;
  * @since 2021-02-16
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+//@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value = "待秒杀商品信息")
 public class ItemKill implements Serializable {
@@ -73,5 +74,22 @@ public class ItemKill implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")//写出数据库时格式化
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")//页面写出数据库时格式化
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemKill itemKill = (ItemKill) o;
+        return Objects.equals(id, itemKill.id) && itemId.equals(itemKill.itemId) && total.equals(itemKill.total) && version.equals(itemKill.version) && startTime.equals(itemKill.startTime) && endTime.equals(itemKill.endTime) && isActive.equals(itemKill.isActive) && createTime.equals(itemKill.createTime) && updateTime.equals(itemKill.updateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, itemId, total, version, startTime, endTime, isActive, createTime, updateTime);
+    }
 }
