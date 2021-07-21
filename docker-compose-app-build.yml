@@ -12,22 +12,31 @@ services:
       - "8081:8081"
     environment:
       - application_name=kill01
-      - datasource_url=jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      - datasource_url=jdbc:mysql://106.14.139.176:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
       - datasource_username=root
       - datasource_password=123456
       - kafka_bootstrap_servers=106.14.139.176:9092
+      - consul_host=consul
     depends_on:
       - consul
+    networks:
+      - micro
   payment:
     image: includeno/killsystem-pay:1.0
     container_name: pay01
     ports:
       - "8080:8080"
     environment:
-      - application_name=kill01
-      - datasource_url=jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      - application_name=pay01
+      - datasource_url=jdbc:mysql://106.14.139.176:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
       - datasource_username=root
       - datasource_password=123456
       - kafka_bootstrap_servers=106.14.139.176:9092
+      - consul_host=consul
     depends_on:
       - consul
+    networks:
+      - micro
+networks:
+  micro:
+    driver: bridge
