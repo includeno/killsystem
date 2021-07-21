@@ -1,0 +1,4 @@
+FROM mysql:5.7.33
+COPY ./miaosha.sql  /tmp/miaosha.sql
+RUN mv /tmp/*.sql /docker-entrypoint-initdb.d
+RUN rm -rf /tmp/sql

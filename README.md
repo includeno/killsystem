@@ -1,7 +1,26 @@
 # killsystem
 https://mermaid-js.github.io/mermaid/#/sequenceDiagram
 
+docker-compose参考
+```
+docker-compose build 重新构建镜像
+docker-compose up 运行
+docker-compose logs 查看运行日志
+docker-compose logs xxx 查看某服务运行日志
+docker-compose stop 表示停止相关容器的运行
+docker-compose rm 删除容器
 
+```
+https://docs.docker.com/compose/reference/up/ 启动服务
+https://www.cnblogs.com/zhangzihong/p/7027566.html
+https://docs.docker.com/compose/environment-variables/ 设置环境变量
+
+部署指令
+参考command
+/command 全局docker-compose部署 docker-compose-env.yml是环境部署 docker-compose-app-build.yml是app部署
+
+/cloudkill/command 单一服务部署方法 和Dockerfile绑定
+/payment/command 单一服务部署方法 和Dockerfile绑定
 
 # 业务用例
 

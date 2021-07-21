@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.cloudcommons.mapper")
+@MapperScan("com.killsystem.mapper")
 public class MyBatisPlusConfig {
 
     //组成乐观锁插件

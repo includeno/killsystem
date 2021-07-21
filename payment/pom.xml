@@ -12,7 +12,12 @@
 
     <artifactId>payment</artifactId>
     <dependencies>
-
+        <!--公共模块-->
+        <dependency>
+            <groupId>com.killsystem</groupId>
+            <artifactId>killsystem-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
 
         <!--AOP事务管理-->

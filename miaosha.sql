@@ -1,4 +1,4 @@
--- CREATE DATABASE `miaosha`;
+CREATE DATABASE `miaosha`;
 USE miaosha;
 CREATE TABLE `item`
 (
