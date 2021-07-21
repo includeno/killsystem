@@ -43,7 +43,7 @@ jobs:
         with:
           context: ./cloudkill
           file: Dockerfile
-          tags: includeno/${{ env.TAG_NAME }}-kill:latest,includeno/${{ env.TAG_NAME }}-kill:${{ env.STATE_RELEASE_VERSION }}"
+          tags: "includeno/${{ env.TAG_NAME }}-kill:latest,includeno/${{ env.TAG_NAME }}-kill:${{ env.STATE_RELEASE_VERSION }}"
           push: true
       - name: Build KillSystem/payment Image to Docker Hub
         id: docker_build_2
@@ -51,5 +51,5 @@ jobs:
         with:
           context: ./payment
           file: Dockerfile
-          tags: includeno/${{ env.TAG_NAME }}-pay:latest,includeno/${{ env.TAG_NAME }}-pay:${{ env.STATE_RELEASE_VERSION }}"
+          tags: "includeno/${{ env.TAG_NAME }}-pay:latest,includeno/${{ env.TAG_NAME }}-pay:${{ env.STATE_RELEASE_VERSION }}"
           push: true
