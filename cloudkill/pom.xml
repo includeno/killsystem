@@ -30,6 +30,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-consul-discovery -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+            <version>2.2.8.RELEASE</version>
+        </dependency>
+
 
         <dependency>
             <groupId>mysql</groupId>
@@ -186,7 +197,7 @@
                 <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.8.RELEASE</version>
+                <version>2.3.12.RELEASE</version>
                 <configuration>
                     <mainClass>com.killsystem.KillMain</mainClass>
                     <layout>ZIP</layout>
