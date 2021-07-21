@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>killsystem</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>com.killsystem</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,6 +13,13 @@
 
 
     <dependencies>
+        <!--公共模块-->
+        <dependency>
+            <groupId>com.killsystem</groupId>
+            <artifactId>killsystem-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!--AOP事务管理-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,6 +67,21 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.6.9</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka-test -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <version>2.6.9</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -166,7 +188,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.8.RELEASE</version>
                 <configuration>
-                    <mainClass>com.cloudcommons.KillMain</mainClass>
+                    <mainClass>com.killsystem.KillMain</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
 <!--                <executions>-->

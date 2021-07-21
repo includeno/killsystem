@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>killsystem</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>com.killsystem</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,6 +12,9 @@
 
     <artifactId>payment</artifactId>
     <dependencies>
+
+
+
         <!--AOP事务管理-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -163,6 +166,12 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.13</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -174,7 +183,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.8.RELEASE</version>
                 <configuration>
-                    <mainClass>com.cloudcommons.PaymentMain</mainClass>
+                    <mainClass>com.killsystem.PaymentMain</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <!--                <executions>-->

@@ -12,7 +12,7 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 47.100.246.168
+      KAFKA_ADVERTISED_HOST_NAME: 106.14.139.176
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     networks:
       - kafkanet

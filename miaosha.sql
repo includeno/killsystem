@@ -33,6 +33,7 @@ CREATE TABLE `item_kill_success`
     `id`          varchar(50) NOT NULL COMMENT '秒杀成功生成的订单编号',
     `item_id`     int(11) DEFAULT NULL COMMENT '商品id',
     `kill_id`     int(11) DEFAULT NULL COMMENT '秒杀id',
+    `store_id`     int(11) DEFAULT NULL COMMENT '秒杀库存id',
     `user_id`     int(11) DEFAULT NULL COMMENT '用户id',
     `status`      int(11) DEFAULT NULL COMMENT '秒杀结果: -1无效  0成功(未付款)  1已付款  2已取消',
     `create_time` datetime    DEFAULT NULL COMMENT '创建时间',
