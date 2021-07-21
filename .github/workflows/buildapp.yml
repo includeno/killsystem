@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions/guides
 # CI name , it will display on github's action page menu
-name: Build KillSystem Images
+name: BuildKillSystemImages
 # trigger on which this CI should be run
 on: # push operation is operate
   push:
@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       #版本号第一位不允许空格
       - name: Build KillSystem/cloudkill Image to Docker Hub
-        id: docker_build
+        id: docker_build_1
         uses: docker/build-push-action@v2
         with:
           context: ./cloudkill
@@ -46,7 +46,7 @@ jobs:
           tags: includeno/${{ env.TAG_NAME }}-kill:latest,includeno/${{ env.TAG_NAME }}-kill:${{ env.STATE_RELEASE_VERSION }}"
           push: true
       name: Build KillSystem/payment Image to Docker Hub
-        id: docker_build
+        id: docker_build_2
         uses: docker/build-push-action@v2
         with:
           context: ./payment
