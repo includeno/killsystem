@@ -4,7 +4,7 @@ EXPOSE 8080
 WORKDIR /app
 
 #add jar file
-ADD target/payment-1.0-SNAPSHOT.jar /app/application.jar
+ADD payment/target/payment-1.0-SNAPSHOT.jar /app/application.jar
 
 #指定容器启动程序及参数 <ENTRYPOINT> "<CMD>"
 #default port of tomcat is 8080
