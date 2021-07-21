@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: /cloudkill/Dockerfile
+          file: cloudkill/Dockerfile
           tags: "includeno/${{ env.TAG_NAME }}-kill:latest,includeno/${{ env.TAG_NAME }}-kill:${{ env.STATE_RELEASE_VERSION }}"
           push: true
       - name: Build KillSystem/payment Image to Docker Hub
@@ -50,6 +50,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: /payment/Dockerfile
+          file: payment/Dockerfile
           tags: "includeno/${{ env.TAG_NAME }}-pay:latest,includeno/${{ env.TAG_NAME }}-pay:${{ env.STATE_RELEASE_VERSION }}"
           push: true
