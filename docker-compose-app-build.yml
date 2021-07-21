@@ -11,8 +11,11 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - spring.application.name=kill01
-
+      - application_name=kill01
+      - datasource_url=jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      - datasource_username=root
+      - datasource_password=123456
+      - kafka_bootstrap_servers=106.14.139.176:9092
     depends_on:
       - consul
   payment:
@@ -21,7 +24,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - spring.application.name=payment01
-
+      - application_name=kill01
+      - datasource_url=jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      - datasource_username=root
+      - datasource_password=123456
+      - kafka_bootstrap_servers=106.14.139.176:9092
     depends_on:
       - consul
