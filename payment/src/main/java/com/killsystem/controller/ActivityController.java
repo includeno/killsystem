@@ -67,7 +67,7 @@ public class ActivityController {
         return map;
     }
 
-    @GetMapping("/activity/prepare")
+    @GetMapping("/activity/generateUsers")
     public String generateUsers(Integer count){
         //Integer count=1000;
 
