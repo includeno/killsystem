@@ -28,8 +28,12 @@ public class KillController {
     @GetMapping("/sale")
     public R killNoLoggedIn(@RequestParam("killId") Integer killId, @RequestParam("userId") Integer userId){
         log.info("killNoLoggedIn killId:"+killId+" userId:"+userId);
-
+        //用户登录状态检测
+        killService.examUserInPeriod(userId,1000,TimeUnit.MILLISECONDS,3);
         if (rateLimiter.tryAcquire(2, TimeUnit.SECONDS)) {
+            //如果用户在规定时间内已经秒杀过，就返回请等待
+            killService.examUser(userId);
+
             //若获取乐观锁，service层实现
             ItemKillSuccess map = killService.kill(killId, userId);
 

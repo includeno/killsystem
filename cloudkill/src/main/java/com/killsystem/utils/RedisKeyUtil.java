@@ -57,5 +57,17 @@ public interface RedisKeyUtil {
     public static String getUserVisitedKey(String count){
         return PREFIX_USER_VISITED+SPILT+count;
     }
+
+    static final String PREFIX_USER_VISITED_IN_PERIOD="user:period"; //用户
+    //获取用户指定时间段内访问次数
+    public static String getUserVisitedInPeriodKey(int userId,int period){
+        return PREFIX_USER_VISITED+SPILT+userId+SPILT+period;
+    }
+
+    static final String PREFIX_USER_RESTRICTED="user:restricted"; //用户
+    //获取用户限制情况 默认有效时长10s
+    public static String getUserRestrictedKey(int userId){
+        return PREFIX_USER_RESTRICTED+SPILT+userId;
+    }
 }
 
