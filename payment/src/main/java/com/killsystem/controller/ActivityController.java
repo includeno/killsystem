@@ -1,29 +1,23 @@
-package com.killsystem.activity;
+package com.killsystem.controller;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.killsystem.PaymentMain;
 import com.killsystem.entity.Item;
 import com.killsystem.entity.ItemKill;
 import com.killsystem.entity.User;
 import com.killsystem.flow.ItemFlow;
 import com.killsystem.flow.ItemKillFlow;
 import com.killsystem.flow.UserFlow;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-@Slf4j
-@SpringBootTest(classes = PaymentMain.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ActivityCreate {
+@RestController
+public class ActivityController {
     @Autowired
     ItemFlow itemFlow;
 
@@ -35,6 +29,57 @@ public class ActivityCreate {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @GetMapping("/activity/prepare")
+    public HashMap<String,Integer> prepare(Integer itemCount,Integer period,Boolean clearRedis){
+        Date now=new Date();
+        //清除redis内所有key
+        if(clearRedis.equals(Boolean.TRUE)){
+            clearRedis();
+        }
+
+        //1添加商品
+        Item item=generateItem();
+        itemFlow.add(item);
+        QueryWrapper<Item> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("code", item.getCode());
+
+        List<Item> itemIds=itemFlow.queryByCondition(queryWrapper);
+        Integer itemId=itemIds.get(0).getId();
+
+        //2添加秒杀活动和redis预热
+        ItemKill itemKill=generateItemKill();
+        itemKill.setItemId(itemId);
+        itemKill.setTotal(itemCount);
+        itemKill.setStartTime(now);
+        Date newDate = DateUtil.offset(now, DateField.MINUTE, period);
+        itemKill.setEndTime(newDate);//starttime+30分钟
+        itemKillFlow.create(itemKill);
+
+        QueryWrapper<ItemKill> itemKillQueryWrapper=new QueryWrapper<>();
+        itemKillQueryWrapper.eq("create_time", item.getCreateTime());
+        List<ItemKill> itemKillIds=itemKillFlow.queryByCondition(itemKillQueryWrapper);
+        Integer itemKillId=itemKillIds.get(0).getId();
+
+        HashMap<String,Integer> map=new HashMap<>();
+        map.put("itemId",itemId);
+        map.put("itemKillId",itemKillId);
+        return map;
+    }
+
+    @GetMapping("/activity/prepare")
+    public String generateUsers(Integer count){
+        //Integer count=1000;
+
+        for(int i=0;i<count;i++){
+            User user=getDefaultUser();
+            userFlow.add(user);
+        }
+        return "success";
+    }
+
+
+
 
     public Item generateItem(){
         Item item=new Item();
@@ -84,7 +129,8 @@ public class ActivityCreate {
 
     }
 
-    @Test
+
+
     public void createActivity(){
         Date now=new Date();
         //清除redis内所有key
@@ -110,7 +156,6 @@ public class ActivityCreate {
 
     }
 
-
     public User getDefaultUser(){
         Date now=new Date();
         User user=new User();
@@ -126,23 +171,5 @@ public class ActivityCreate {
         user.setUpdateTime(now);
 
         return user;
-    }
-    @Test
-    public void createUser(){
-        User user=getDefaultUser();
-        userFlow.add(user);
-    }
-
-    /*
-    *   批量生成用户
-    * */
-    @Test
-    public void createBatchUser(){
-        Integer count=1000;
-
-        for(int i=0;i<count;i++){
-            User user=getDefaultUser();
-            userFlow.add(user);
-        }
     }
 }

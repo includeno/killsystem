@@ -14,12 +14,14 @@ services:
       - "8081:8080"
     environment:
       - application_name=kill01
-      - datasource_url=jdbc:mysql://47.102.46.78:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
-      - datasource_username=root
-      - datasource_password=123456
-      - kafka_bootstrap_servers=47.102.46.78:9092
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
       - consul_host=consul
-      - redis_host=47.102.46.78
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
     depends_on:
       - consul
     networks:
@@ -31,12 +33,14 @@ services:
       - "8080:8080"
     environment:
       - application_name=pay01
-      - datasource_url=jdbc:mysql://47.102.46.78:3306/miaosha?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
-      - datasource_username=root
-      - datasource_password=123456
-      - kafka_bootstrap_servers=47.102.46.78:9092
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
       - consul_host=consul
-      - redis_host=47.102.46.78
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
     depends_on:
       - consul
     networks:
