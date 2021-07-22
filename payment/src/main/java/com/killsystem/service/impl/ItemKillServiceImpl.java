@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -78,5 +79,10 @@ public class ItemKillServiceImpl extends ServiceImpl<ItemKillMapper, ItemKill> i
 
 
         return itemKill;
+    }
+
+    @Override
+    public List<ItemKill> queryByStartTime(String startTime, Integer itemId) {
+        return itemKillMapper.queryByStartTime(startTime,itemId);
     }
 }

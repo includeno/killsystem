@@ -18,13 +18,13 @@ public class ItemKillFlow {
 
 
     @Autowired
-    ItemKillService ItemKillService;
+    ItemKillService itemKillService;
 
     public Boolean add(ItemKill itemKill){
         itemKill.setIsActive(ItemKill.active);
         if (itemKill!=null){
-            ItemKill temp = ItemKillService.getById(itemKill.getId());
-            return ItemKillService.save(itemKill);
+            ItemKill temp = itemKillService.getById(itemKill.getId());
+            return itemKillService.save(itemKill);
         }
         //不符合添加标准
         throw new ItemKillException(Status.ITEMKILL_NOT_ALLOWED);//不符合条件
@@ -34,16 +34,16 @@ public class ItemKillFlow {
         itemKill.setIsActive(ItemKill.active);
         if (itemKill!=null){
             //ItemKill temp = ItemKillService.getById(itemKill.getId());
-            return ItemKillService.createKill(itemKill);
+            return itemKillService.createKill(itemKill);
         }
         //不符合添加标准
         throw new ItemKillException(Status.ITEMKILL_NOT_ALLOWED);//不符合条件
     }
 
     public Boolean update(ItemKill itemKill){
-        ItemKill  queryResult=ItemKillService.getById(itemKill.getId());
+        ItemKill  queryResult= itemKillService.getById(itemKill.getId());
         if(queryResult!=null){
-            return ItemKillService.updateById(itemKill);
+            return itemKillService.updateById(itemKill);
         }
         else{
             log.warn("no changes in ItemKill");
@@ -53,23 +53,27 @@ public class ItemKillFlow {
     }
 
     public ItemKill queryById(Integer id){
-        return ItemKillService.getById(id);
+        return itemKillService.getById(id);
+    }
+
+    public List<ItemKill> queryByStartTime(String startTime,Integer itemId){
+        return itemKillService.queryByStartTime(startTime,itemId);
     }
 
     public List<ItemKill> list(){
-        return ItemKillService.list();
+        return itemKillService.list();
     }
     public List<ItemKill> queryByCondition(Wrapper<ItemKill> queryWrapper){
-        return ItemKillService.list(queryWrapper);
+        return itemKillService.list(queryWrapper);
     }
 
     public IPage<ItemKill> pageQuery(IPage<ItemKill> queryPage, Wrapper<ItemKill> ItemKillQueryWrapper){
-        IPage<ItemKill> ItemKillKillIPage = ItemKillService.page(queryPage, ItemKillQueryWrapper);
+        IPage<ItemKill> ItemKillKillIPage = itemKillService.page(queryPage, ItemKillQueryWrapper);
         return ItemKillKillIPage;
     }
 
     public Boolean deleteById(Integer id){
-        return ItemKillService.removeById(id);
+        return itemKillService.removeById(id);
     }
 
 }

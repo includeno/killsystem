@@ -10,7 +10,9 @@ import com.killsystem.entity.User;
 import com.killsystem.flow.ItemFlow;
 import com.killsystem.flow.ItemKillFlow;
 import com.killsystem.flow.UserFlow;
+import com.killsystem.mapper.ItemKillMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,9 @@ public class ActivityCreate {
 
     @Autowired
     UserFlow userFlow;
+
+    @Autowired
+    ItemKillMapper itemKillMapper;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -107,6 +112,18 @@ public class ActivityCreate {
         Date newDate = DateUtil.offset(now, DateField.MINUTE, 20);
         itemKill.setEndTime(newDate);//starttime+30分钟
         itemKillFlow.create(itemKill);
+
+        List<ItemKill> itemKillIds=itemKillMapper.queryByStartTime(DateUtil.format(itemKill.getStartTime(),"yyyy-MM-dd HH:mm:ss"),itemId);
+        System.out.println("itemKillIds: "+itemKillIds.size());
+
+//        QueryWrapper<ItemKill> itemKillQueryWrapper=new QueryWrapper<>();
+//        String strStart= DateFormatUtils.format(itemKill.getStartTime(),"yyyy-MM-dd HH:mm:ss");
+//        //itemKillQueryWrapper.eq("start_time", itemKill.getStartTime());
+//        itemKillQueryWrapper.apply(("UNIX_TIMESTAMP(start_time)=UNIX_TIMESTAMP('"+strStart+"')"));
+//        itemKillIds=itemKillFlow.queryByCondition(itemKillQueryWrapper);
+        Integer itemKillId=itemKillIds.get(0).getId();
+
+        System.out.println("itemId:"+itemId+" itemKillId"+itemKillId);
 
     }
 

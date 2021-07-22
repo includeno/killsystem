@@ -56,9 +56,8 @@ public class ActivityController {
         itemKill.setEndTime(newDate);//starttime+30分钟
         itemKillFlow.create(itemKill);
 
-        QueryWrapper<ItemKill> itemKillQueryWrapper=new QueryWrapper<>();
-        itemKillQueryWrapper.eq("create_time", item.getCreateTime());
-        List<ItemKill> itemKillIds=itemKillFlow.queryByCondition(itemKillQueryWrapper);
+        List<ItemKill> itemKillIds=itemKillFlow.queryByStartTime(DateUtil.format(itemKill.getStartTime(),"yyyy-MM-dd HH:mm:ss"),itemId);
+        //System.out.println("itemKillIds: "+itemKillIds.size());
         Integer itemKillId=itemKillIds.get(0).getId();
 
         HashMap<String,Integer> map=new HashMap<>();
