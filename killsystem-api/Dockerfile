@@ -10,7 +10,7 @@ ENV consul_port="8500"
 ENV consul_service_name="kill01"
 
 #add jar file
-ADD payment/target/payment-1.0-SNAPSHOT.jar /app/application.jar
+ADD killsystem-api/target/killsystem-api-1.0-SNAPSHOT.jar /app/application.jar
 
 #指定容器启动程序及参数 <ENTRYPOINT> "<CMD>"
 #default port of tomcat is 8080
