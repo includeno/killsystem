@@ -14,6 +14,7 @@
         <module>payment</module>
         <module>cloudkill</module>
         <module>killsystem-common</module>
+        <module>killsystem-api</module>
     </modules>
 
     <name>Maven</name>

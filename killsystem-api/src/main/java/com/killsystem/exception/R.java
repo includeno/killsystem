@@ -1,7 +1,6 @@
 package com.killsystem.exception;
 
 import cn.hutool.http.HttpStatus;
-
 import lombok.Data;
 
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class R {
     private Map<String, Object> data = new HashMap<String, Object>();
 
     //把构造方法私有
-    public R() {}
+    private R() {}
 
     //成功静态方法
     public static R ok() {

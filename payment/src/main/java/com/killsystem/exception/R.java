@@ -23,7 +23,7 @@ public class R {
     private Map<String, Object> data = new HashMap<String, Object>();
 
     //把构造方法私有
-    private R() {}
+    public R() {}
 
     //成功静态方法
     public static R ok() {

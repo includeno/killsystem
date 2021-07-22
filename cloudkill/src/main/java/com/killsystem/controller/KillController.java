@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.TimeUnit;
@@ -26,11 +27,13 @@ public class KillController {
 
     //无需登陆的秒杀业务
     @GetMapping("/sale")
+    @ResponseBody
     public R killNoLoggedIn(@RequestParam("killId") Integer killId, @RequestParam("userId") Integer userId){
-        log.info("killNoLoggedIn killId:"+killId+" userId:"+userId);
-        //用户登录状态检测
-        killService.examUserInPeriod(userId,1000,TimeUnit.MILLISECONDS,3);
+
         if (rateLimiter.tryAcquire(2, TimeUnit.SECONDS)) {
+            log.info("killNoLoggedIn killId:"+killId+" userId:"+userId);
+            //用户登录状态检测
+            killService.examUserInPeriod(userId,1000,TimeUnit.MILLISECONDS,3);
             //如果用户在规定时间内已经秒杀过，就返回请等待
             killService.examUser(userId);
 
@@ -43,6 +46,7 @@ public class KillController {
             return R.error("令牌桶未获取到 当前商品抢购过于火爆~ 请重试！");
         }
     }
+
 //    //ItemKillSuccess killId秒杀id
 //    @GetMapping("/md5/{killId}/{userId}")
 //    public R getMd5(@PathVariable("killId")Integer killId, @PathVariable("userId")Integer userId){

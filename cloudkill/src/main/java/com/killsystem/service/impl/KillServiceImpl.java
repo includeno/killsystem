@@ -35,7 +35,7 @@ public class KillServiceImpl implements KillService {
     public ItemKillSuccess kill(Integer killId, Integer userId) {
         //秒杀id->秒杀商品key->秒杀商品
         String killTimeKey = RedisKeyUtil.getKillTimeKey(killId);
-        String killTimeValue = (String) redisTemplate.opsForValue().get(killTimeKey);
+        Object killTimeValue = redisTemplate.opsForValue().get(killTimeKey);
         //活动已结束 redis内没有秒杀活动时间key
         if(killTimeValue==null){
             throw new CustomException(HttpStatus.HTTP_BAD_REQUEST,"秒杀活动已结束");
@@ -111,11 +111,11 @@ public class KillServiceImpl implements KillService {
         //统计period时间段内的访问次数
         if(userVisitedInPeriodValue==null){
             //初始化
-            redisTemplate.opsForValue().set(userVisitedInPeriodKey,0,period, unit);
+            redisTemplate.opsForValue().set(userVisitedInPeriodKey,"0",period, unit);
         }
         else{
             Integer userVisitedInPeriodCount=Integer.parseInt(userVisitedInPeriodValue);
-            redisTemplate.opsForValue().set(userVisitedInPeriodKey,userVisitedInPeriodCount+1,period, unit);
+            redisTemplate.opsForValue().set(userVisitedInPeriodKey,String.valueOf(userVisitedInPeriodCount+1),period, unit);
             if(userVisitedInPeriodCount>=max){
                 throw new CustomException(HttpStatus.HTTP_BAD_REQUEST,"指定时间段内登录太频繁 请稍后重试");
             }
