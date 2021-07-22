@@ -29,6 +29,7 @@
     <select id="queryByStartTime" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM item_kill
-        WHERE start_time = #{startTime} and item_id = #{itemId}
+        WHERE start_time like ""#{startTime}"%" and item_id = #{itemId}
+        ORDER BY start_time desc
     </select>
 </mapper>
