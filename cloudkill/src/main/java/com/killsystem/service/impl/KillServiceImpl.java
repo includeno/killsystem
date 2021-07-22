@@ -106,16 +106,17 @@ public class KillServiceImpl implements KillService {
     //在指定毫秒内的用户登录次数 没有进入到秒杀令牌环
     public Boolean examUserInPeriod(Integer userId,Integer period,TimeUnit unit,Integer max){
         String userVisitedInPeriodKey = RedisKeyUtil.getUserVisitedInPeriodKey(userId,period);
-        Integer userRestricted = (Integer) redisTemplate.opsForValue().get(userVisitedInPeriodKey);
-
+        String userVisitedInPeriodValue = (String) redisTemplate.opsForValue().get(userVisitedInPeriodKey);
+        
         //统计period时间段内的访问次数
-        if(userRestricted==null){
+        if(userVisitedInPeriodValue==null){
             //初始化
             redisTemplate.opsForValue().set(userVisitedInPeriodKey,0,period, unit);
         }
         else{
-            redisTemplate.opsForValue().set(userVisitedInPeriodKey,userRestricted+1,period, unit);
-            if(userRestricted>=max){
+            Integer userVisitedInPeriodCount=Integer.parseInt(userVisitedInPeriodValue);
+            redisTemplate.opsForValue().set(userVisitedInPeriodKey,userVisitedInPeriodCount+1,period, unit);
+            if(userVisitedInPeriodCount>=max){
                 throw new CustomException(HttpStatus.HTTP_BAD_REQUEST,"指定时间段内登录太频繁 请稍后重试");
             }
         }
