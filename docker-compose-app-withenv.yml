@@ -19,6 +19,7 @@ services:
       - datasource_password=${datasource_password}
       - kafka_bootstrap_servers=${kafka_bootstrap_servers}
       - consul_host=consul
+      - consul_service_name=kill01
       - redis_host=${redis_host}
       - redis_password=${redis_password}
       - redis_port=${redis_port}
@@ -38,6 +39,7 @@ services:
       - datasource_password=${datasource_password}
       - kafka_bootstrap_servers=${kafka_bootstrap_servers}
       - consul_host=consul
+      - consul_service_name=pay
       - redis_host=${redis_host}
       - redis_password=${redis_password}
       - redis_port=${redis_port}
