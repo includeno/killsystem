@@ -45,6 +45,18 @@ services:
       - consul
     networks:
       - micro
+  api:
+    image: includeno/killsystem-api:1.0
+    container_name: api
+    ports:
+      - "8082:8080"
+    environment:
+      - application_name=api
+      - consul_host=consul
+    depends_on:
+      - consul
+    networks:
+      - micro
 networks:
   micro:
     driver: bridge

@@ -47,7 +47,7 @@ services:
     ports:
       - "8082:8080"
     environment:
-      - application_name=pay01
+      - application_name=api
       - consul_host=consul
     depends_on:
       - consul
