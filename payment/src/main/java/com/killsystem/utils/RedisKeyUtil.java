@@ -33,6 +33,11 @@ public interface RedisKeyUtil {
     public static String getKillStockKey(int itemId, int killId){
         return PREFIX_KILL_STOCK+SPILT+itemId+SPILT+killId;
     }
+    static final String PREFIX_MYSQL_KILL_STOCK="sale:mysqlstock:item";
+    //获取秒杀活动的库存 Integer 和mysql内killtotal关联
+    public static String getMysqlKillStockKey(int itemId, int killId){
+        return PREFIX_MYSQL_KILL_STOCK+SPILT+itemId+SPILT+killId;
+    }
 
     static final String PREFIX_ITEM_KILL="sale:itemkill";
     //获取秒杀活动 Object

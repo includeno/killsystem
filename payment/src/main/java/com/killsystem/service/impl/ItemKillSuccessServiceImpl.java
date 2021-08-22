@@ -15,6 +15,8 @@ import com.killsystem.service.ItemKillSuccessService;
 import com.killsystem.utils.RedisKeyUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -29,10 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional //开启事务
-@Slf4j
 @Service
 public class ItemKillSuccessServiceImpl extends ServiceImpl<ItemKillSuccessMapper, ItemKillSuccess> implements ItemKillSuccessService {
 
+    public Logger log= LoggerFactory.getLogger("ItemKillSuccessServiceImpl");
     @Autowired
     Gson gson;
     @Autowired

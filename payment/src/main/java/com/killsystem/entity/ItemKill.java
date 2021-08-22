@@ -1,10 +1,5 @@
 package com.killsystem.entity;
 
-/**
- * @author includeno
- * @since 2021/3/23 9:16
- */
-
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

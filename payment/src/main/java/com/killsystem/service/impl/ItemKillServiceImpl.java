@@ -12,6 +12,8 @@ import com.killsystem.service.ItemKillService;
 import com.killsystem.utils.RedisKeyUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -29,9 +31,9 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Transactional //开启事务
-@Slf4j
 @Service
 public class ItemKillServiceImpl extends ServiceImpl<ItemKillMapper, ItemKill> implements ItemKillService {
+    public Logger log= LoggerFactory.getLogger("ItemKillServiceImpl");
     @Autowired
     Gson gson;
     @Autowired
@@ -77,6 +79,9 @@ public class ItemKillServiceImpl extends ServiceImpl<ItemKillMapper, ItemKill> i
         String itemKey = RedisKeyUtil.getItemKey(item.getId());
         redisTemplate.opsForValue().set(itemKey,gson.toJson(item,Item.class),itemKill.getEndTime().getTime()-now.getTime(), TimeUnit.MILLISECONDS);
 
+        //redis 添加秒杀商品信息 Object
+        String mysqlKillStockKey = RedisKeyUtil.getMysqlKillStockKey(item.getId(),itemKill.getId());
+        redisTemplate.opsForValue().set(mysqlKillStockKey,String.valueOf(itemKill.getKilltotal()),itemKill.getEndTime().getTime()-now.getTime(), TimeUnit.MILLISECONDS);
 
         return itemKill;
     }

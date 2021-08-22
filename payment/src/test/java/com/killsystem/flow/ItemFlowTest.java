@@ -6,6 +6,8 @@ import com.killsystem.exception.ItemException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -16,9 +18,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @SpringBootTest(classes = PaymentMain.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ItemFlowTest {
+    public Logger log= LoggerFactory.getLogger("ItemFlowTest");
+
     @Autowired
     ItemFlow itemFlow;
 

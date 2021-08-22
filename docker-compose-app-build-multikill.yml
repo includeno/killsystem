@@ -1,0 +1,113 @@
+
+version: '3'
+services:
+  consul:
+    image: consul:1.9.7
+    ports:
+      - "8500:8500"
+    networks:
+      - micro
+  kill:
+    build:
+        context: .
+        dockerfile: cloudkill/Dockerfile
+    image: includeno/killsystem-kill:1.0
+    container_name: kill01
+    ports:
+      - "8081:8080"
+    environment:
+      - application_name=kill01
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
+      - consul_host=consul
+      - consul_service_name=kill01
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
+    depends_on:
+      - consul
+    networks:
+      - micro
+  kill02:
+    image: includeno/killsystem-kill:1.0
+    container_name: kill02
+    ports:
+      - "8083:8080"
+    environment:
+      - application_name=kill02
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
+      - consul_host=consul
+      - consul_service_name=kill01
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
+    depends_on:
+      - kill
+    networks:
+      - micro
+  kill03:
+    image: includeno/killsystem-kill:1.0
+    container_name: kill03
+    ports:
+      - "8084:8080"
+    environment:
+      - application_name=kill03
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
+      - consul_host=consul
+      - consul_service_name=kill01
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
+    depends_on:
+      - kill
+    networks:
+      - micro
+  payment:
+    build:
+        context: .
+        dockerfile: payment/Dockerfile
+    image: includeno/killsystem-pay:1.0
+    container_name: pay01
+    ports:
+      - "8080:8080"
+    environment:
+      - application_name=pay01
+      - datasource_url=${datasource_url}
+      - datasource_username=${datasource_username}
+      - datasource_password=${datasource_password}
+      - kafka_bootstrap_servers=${kafka_bootstrap_servers}
+      - consul_host=consul
+      - consul_service_name=pay
+      - redis_host=${redis_host}
+      - redis_password=${redis_password}
+      - redis_port=${redis_port}
+    depends_on:
+      - consul
+    networks:
+      - micro
+  api:
+    build:
+        context: .
+        dockerfile: killsystem-api/Dockerfile
+    image: includeno/killsystem-api:1.0
+    container_name: api
+    ports:
+      - "8082:8080"
+    environment:
+      - application_name=api
+      - consul_host=consul
+    depends_on:
+      - consul
+    networks:
+      - micro
+networks:
+  micro:
+    driver: bridge

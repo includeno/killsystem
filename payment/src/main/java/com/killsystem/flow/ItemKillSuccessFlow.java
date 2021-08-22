@@ -5,14 +5,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.killsystem.entity.ItemKillSuccess;
 import com.killsystem.service.ItemKillSuccessService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Slf4j
 public class ItemKillSuccessFlow {
+    public Logger log= LoggerFactory.getLogger("ItemKillSuccessFlow");
 
     @Autowired
     ItemKillSuccessService itemKillSuccessService;

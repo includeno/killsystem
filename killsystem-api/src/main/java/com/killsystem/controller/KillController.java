@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.killsystem.exception.R;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -16,9 +18,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 @RestController
 public class KillController {
+    public Logger log= LoggerFactory.getLogger("KillController");
+
     @Autowired
     private LoadBalancerClient loadBalancer;
 
@@ -35,10 +38,11 @@ public class KillController {
     @GetMapping("/kill")
     public R kill(@RequestParam("killId") Integer killId, @RequestParam("userId") Integer userId){
         ServiceInstance serviceInstance = loadBalancer.choose("kill01");
+
         System.out.println("服务地址：" + serviceInstance.getUri());
         System.out.println("服务名称：" + serviceInstance.getServiceId());
 
-        String href=serviceInstance.getUri().toString()+"/sale";
+        String href=serviceInstance.getUri().toString()+"/rediskill";
 
         HttpUrl.Builder httpBuilder = HttpUrl.parse(href).newBuilder();
         httpBuilder.addQueryParameter("killId",String.valueOf(killId));
@@ -63,6 +67,46 @@ public class KillController {
         }
 
     }
+
+    @GetMapping("/mysqlkill")
+    public R mysqlkill(@RequestParam("killId") Integer killId, @RequestParam("userId") Integer userId){
+        ServiceInstance serviceInstance = loadBalancer.choose("kill01");
+        System.out.println("服务地址：" + serviceInstance.getUri());
+        System.out.println("服务名称：" + serviceInstance.getServiceId());
+
+        String href=serviceInstance.getUri().toString()+"/mysqlkill";
+
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(href).newBuilder();
+        httpBuilder.addQueryParameter("killId",String.valueOf(killId));
+        httpBuilder.addQueryParameter("userId",String.valueOf(userId));
+
+        Request request = new Request.Builder().url(httpBuilder.build()).build();
+        Response response=null;
+        try {
+            if(request!=null){
+                log.warn(request.toString());
+                response = client.newCall(request).execute();
+                Gson gson=new Gson();
+
+                String responseString=response.body().string();
+                log.warn("response.body():"+responseString);
+                R result=gson.fromJson(String.valueOf(responseString), R.class);
+                log.warn("response json"+gson.toJson(result));
+
+                return result;
+            }
+            else{
+                log.error("request null");
+                return null;
+            }
+
+        } catch (IOException e) {
+            log.warn(response.toString());
+            return R.error();
+        }
+
+    }
+
 
 
     @GetMapping("/discovery")

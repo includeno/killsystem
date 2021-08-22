@@ -5,6 +5,8 @@ import com.killsystem.entity.ItemKillSuccess;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,9 +20,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-@Slf4j
+
 @Service
 public class KafkaProducerService {
+    public Logger log= LoggerFactory.getLogger("KafkaProducerService");
     @Autowired
     @Qualifier("kafkaTemplate")
     KafkaTemplate<Integer,String> kafkaTemplate;
