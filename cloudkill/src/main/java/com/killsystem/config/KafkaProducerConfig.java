@@ -35,7 +35,6 @@ public class KafkaProducerConfig {
     public NewTopic topic() {
         return TopicBuilder.name(KafkaTopic.itemKillSuccess)
                 .partitions(2)
-                .replicas(1)
                 .build();
     }
 

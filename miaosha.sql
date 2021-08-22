@@ -19,6 +19,7 @@ CREATE TABLE `item_kill`
     `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `item_id`     varchar(45) DEFAULT NULL COMMENT '商品id',
     `total`       varchar(45) DEFAULT NULL COMMENT '可被秒杀的总数',
+    `killtotal`   varchar(45) DEFAULT NULL COMMENT '待秒杀商品实际库存',
     `version`     int(11) DEFAULT NULL COMMENT '乐观锁',
     `start_time`  datetime    DEFAULT NULL COMMENT '秒杀开始时间',
     `end_time`    datetime    DEFAULT NULL COMMENT '秒杀结束时间',

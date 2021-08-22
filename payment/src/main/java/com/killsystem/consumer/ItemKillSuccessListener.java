@@ -70,7 +70,7 @@ public class ItemKillSuccessListener {
     private ItemKill checkStock(Integer killId){
         //根据商品id查询库存
         ItemKill itemKill = itemKillService.getById(killId);
-        if (itemKill.getTotal()<=0){
+        if (itemKill.getKilltotal()<=0){
             throw new RuntimeException("库存不足！！！");
         }
         return itemKill;

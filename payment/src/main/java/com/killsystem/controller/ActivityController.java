@@ -51,6 +51,7 @@ public class ActivityController {
         ItemKill itemKill=generateItemKill();
         itemKill.setItemId(itemId);
         itemKill.setTotal(itemCount);
+        itemKill.setKilltotal(itemCount);
         itemKill.setStartTime(now);
         Date newDate = DateUtil.offset(now, DateField.MINUTE, period);
         itemKill.setEndTime(newDate);//starttime+30分钟
@@ -100,6 +101,7 @@ public class ActivityController {
         itemKill.setIsActive(ItemKill.active);
         itemKill.setItemId(1);
         itemKill.setTotal(10);
+        itemKill.setKilltotal(10);
         itemKill.setVersion(0);
 
         itemKill.setStartTime(now);

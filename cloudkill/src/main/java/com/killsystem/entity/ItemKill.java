@@ -44,6 +44,9 @@ public class ItemKill implements Serializable {
     @ApiModelProperty(value = "待秒杀商品库存")
     private Integer total;
 
+    @ApiModelProperty(value = "待秒杀商品实际库存")
+    private Integer killtotal;
+
     @ApiModelProperty(value = "乐观锁")
     @Version
     private Integer version;

@@ -44,6 +44,9 @@ public class ItemKill implements Serializable {
     @ApiModelProperty(value = "待秒杀商品库存")
     private Integer total;
 
+    @ApiModelProperty(value = "待秒杀商品实际库存")
+    private Integer killtotal;
+
     @ApiModelProperty(value = "乐观锁")
     @Version
     private Integer version;
@@ -78,16 +81,5 @@ public class ItemKill implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemKill itemKill = (ItemKill) o;
-        return Objects.equals(id, itemKill.id) && itemId.equals(itemKill.itemId) && total.equals(itemKill.total) && version.equals(itemKill.version) && startTime.equals(itemKill.startTime) && endTime.equals(itemKill.endTime) && isActive.equals(itemKill.isActive) && createTime.equals(itemKill.createTime) && updateTime.equals(itemKill.updateTime);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, itemId, total, version, startTime, endTime, isActive, createTime, updateTime);
-    }
 }

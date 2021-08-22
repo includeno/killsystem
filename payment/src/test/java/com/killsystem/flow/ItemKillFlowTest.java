@@ -28,6 +28,7 @@ class ItemKillFlowTest {
         itemKill.setIsActive(ItemKill.active);
         itemKill.setItemId(1);
         itemKill.setTotal(10);
+        itemKill.setKilltotal(10);
         itemKill.setVersion(0);
 
         itemKill.setStartTime(new Date());

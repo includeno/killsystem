@@ -1,26 +1,110 @@
 # killsystem
 https://mermaid-js.github.io/mermaid/#/sequenceDiagram
 
-docker-compose参考
+
+
+# docker基础操作参考
+
+```
+#镜像
+docker pull consul:1.9.7 拉取镜像
+docker image rm consul:1.9.7 删除镜像
+
+#容器
+docker run consul:1.9.7 运行容器
+docker start xxxx 启动容器
+docker restart xxxx 重新启动容器
+docker stop xxxx 停止容器
+docker rm xxxx 停止容器
+docker ps -a 查看运行的容器
+docker logs -f xxxx 实时查看容器运行日志
+docker logs xxxx 查看容器运行日志
+docker logs xxxx > /root/app.log 容器运行日志导出到宿主机指定位置
+```
+
+# docker-compose基础操作参考
+
 ```
 docker-compose build 重新构建镜像
 docker-compose up 运行
 docker-compose logs 查看运行日志
 docker-compose logs xxx 查看某服务运行日志
+docker-compose -f xxxx.yml logs kill > /root/kill.log 导出服务运行日志到宿主机指定位置
 docker-compose stop 表示停止相关容器的运行
 docker-compose rm 删除容器
 
 ```
-https://docs.docker.com/compose/reference/up/ 启动服务
+https://docs.docker.com/compose/reference 指令参考文档
 https://www.cnblogs.com/zhangzihong/p/7027566.html
 https://docs.docker.com/compose/environment-variables/ 设置环境变量
 
+kafka 参考
+https://docs.spring.io/spring-kafka/reference/html/
+
+consul 参考
+https://www.cnblogs.com/xifengxiaoma/p/9798330.html
+
+# 服务器部署步骤/Deploy steps on servers
+
+## 拉取镜像/Images
+
+```
+docker pull consul:1.9.7
+docker pull openjdk:11.0.10-jdk
+docker pull zookeeper:3.5.9
+docker pull wurstmeister/kafka:2.13-2.6.0
+docker pull mysql:5.7.33
+docker pull redis:6.0.13
+```
+
+## 环境/Environment
+
+```
+#启动环境/Start Environment
+docker-compose -f docker-compose-env.yml up -d
+
+#停止应用并清理文件/Stop And Clean Application
+docker-compose -f docker-compose-env.yml stop
+docker-compose -f docker-compose-env.yml down
+
+#重新启动环境中的mysql/Restart mysql
+docker-compose -f docker-compose-env.yml build
+```
+
+## 应用 使用env文件/Application with env 
+
+```
+#启动应用/Start Application
+docker-compose --env-file app.env -f docker-compose-app-withenv.yml  up -d
+
+#停止应用并清理文件/Stop And Clean Application
+docker-compose -f docker-compose-app-withenv.yml stop
+docker-compose -f docker-compose-app-withenv.yml down
+```
+
+
+
+已生成的docker镜像 可以选择自行构建镜像
+
+```
+docker pull includeno/killsystem-kill
+docker pull includeno/killsystem-pay
+docker pull includeno/killsystem-api
+```
+
 部署指令
 参考command
-/command 全局docker-compose部署 docker-compose-env.yml是环境部署 docker-compose-app-build.yml是app部署
+
+```
+command 文件 全局docker-compose部署 命令
+docker-compose-env.yml是环境部署 
+docker-compose-app-withenv.yml是app部署
+```
 
 /cloudkill/command 单一服务部署方法 和Dockerfile绑定
 /payment/command 单一服务部署方法 和Dockerfile绑定
+
+/api/command 单一服务部署方法 和Dockerfile绑定
 
 # 业务用例
 
